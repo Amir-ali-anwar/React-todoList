@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import customFetch from "./utils";
 const Items = () => {
   const { data, isLoading, error, isError } = useQuery({
-    queryKey: ["task"],
+    queryKey: ["tasks"],
     queryFn: async () => {
       const { data } = await customFetch.get("/");
       return data;

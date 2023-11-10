@@ -1,10 +1,22 @@
+import {useQueryClient,useMutation } from '@tanstack/react-query';
+import customFetch from './utils';
+
 const SingleItem = ({ item }) => {
+  const queryClient= useQueryClient()
+  const {mutate:editTask}= useMutation({
+    mutationFn:({taskId,isDone})=>{
+      return customFetch.patch(`/${taskId}`,{isDone})
+    },
+    onSuccess:()=>{
+      queryClient.invalidateQueries({queryKey:["tasks"]})
+    }
+  })
   return (
     <div className='single-item'>
       <input
         type='checkbox'
         checked={item.isDone}
-        onChange={() => console.log('edit task')}
+        onChange={() => editTask({taskId:item.id,isDone:!item.isDone})}
       />
       <p
         style={{

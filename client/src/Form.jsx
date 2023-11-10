@@ -1,11 +1,18 @@
+import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
-
+import customFetch from './utils';
 const Form = () => {
   const [newItemName, setNewItemName] = useState('');
-
+  const {isLoading, mutate:createTask} = useMutation({
+    mutationFn:(taskTitle)=>customFetch.post('/',{title:taskTitle})
+  })
   const handleSubmit = (e) => {
     e.preventDefault();
+    createTask(newItemName)
   };
+  if(isLoading){
+    return <p style={{ marginTop: "1rem" }}>Loading ....</p>;
+  }
   return (
     <form onSubmit={handleSubmit}>
       <h4>task bud</h4>

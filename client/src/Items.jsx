@@ -18,7 +18,11 @@ const Items = () => {
   if (error) {
     return <p style={{ marginTop: "1rem" }}>{error.message}</p>;
   }
+  if(data.taskList.length===0){
+    return <p style={{ marginTop: "1rem" }}>No Items to show</p>
+  }
   return (
+
     <div className="items">
       {data.taskList.map((item) => {
         return <SingleItem key={item.id} item={item} />;
